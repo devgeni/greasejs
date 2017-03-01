@@ -3,7 +3,7 @@
 // @namespace https://dribbble.com
 // @description (Enjoy) dribbble without js
 // @include https://dribbble.com/*
-// @version 0.2
+// @version 0.2.1
 // @author junib
 // ==/UserScript==
 
@@ -12,7 +12,7 @@
     var imgs = document.querySelectorAll('.dribbble-shot .dribbble-img .dribbble-link picture img');
 
     if (imgs.length) {
-        imgs.forEach(el => el.src.replace(/_teaser(\..+)$/, "_1x$1"));
+        imgs.forEach(el => el.src = el.src.replace(/_teaser(\..+)$/, "_1x$1"));
     }
     
     let st = document.createElement('style');
