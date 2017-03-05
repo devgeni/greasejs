@@ -1,38 +1,44 @@
 // ==UserScript==
 // @name        Make Dribbble Great Again
 // @namespace   https://dribbble.com
-// @description Load large images for dribbble and delete overlays
+// @description Load large images for dribbble and delete overlays with(out) JS
 // @include     https://dribbble.com/*
-// @version     0.1.1
+// @version     0.2.0
 // @author      junib
 // @grant       none
 // ==/UserScript==
 
 (() => {
-
-    var imgs = document.querySelectorAll('.dribbble-shot .dribbble-img .dribbble-link picture');
-
-    if (imgs.length) {
-        imgs.forEach(el => {
-            // remove _1x from first img source using regexp
-            let picsrc = el.firstElementChild.srcset.replace(/_1x(\..+)$/, "$1");
-            let img = document.createElement('img');
-            img.src = picsrc;
-
-            let par = el.parentNode;
-            par.insertBefore(img, el);
-
-            // remove self
-            par.removeChild(el);
-            // remove overlay
-            par.parentNode.removeChild(par.nextElementSibling);
-        });
-    }
-
     var st = document.createElement('style');
-
     st.innerHTML = 'ol.dribbbles li.group { width: 47%; }' +
         'ol.dribbbles li.group div.dribbble-img img { width: 100% }';
     document.head.appendChild(st);
+    
+    let changeImg = (el) => {   
+        let pic = el.querySelector('.dribbble-link picture');
+        let picsrc = pic.firstElementChild.srcset.replace(/_1x(\..+)$/, "$1");
+        let img = document.createElement('img');
+        img.src = picsrc;
+        
+        let par = pic.parentNode;
+        par.insertBefore(img, pic);
+        
+        // removing
+        par.removeChild(pic);
+        // removing overlay. why???
+        par.parentNode.removeChild(par.nextElementSibling);
+    };
+    
+    // first call
+    let litems = document.querySelectorAll('.dribbbles > .group');
+    litems.forEach((litem) => changeImg(litem) );
+    
+    // waiting for new dribbbles to come
+    var observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            mutation.addedNodes.forEach((litem) => changeImg(litem) );
+        });
+    });
+    observer.observe(document.querySelector('.dribbbles'), { childList: true });
 
 })();
