@@ -3,12 +3,28 @@
 // @namespace   https://dribbble.com
 // @description Load large images for dribbble and delete overlays with(out) JS
 // @include     https://dribbble.com/*
-// @version     0.2.0
+// @version     0.3.0
 // @author      junib
 // @grant       none
 // ==/UserScript==
 
 (() => {
+    window.onkeydown = scrollPage;
+    
+    function scrollPage(e) {
+        if (e.keyCode === 98) { // numPad 2 / scroll down
+            let shot = document.querySelector('[id^="screenshot-"]');
+            if (!window.pageYOffset) {
+                shot.scrollIntoView();
+            } else {
+                window.scrollBy(0, shot.clientHeight);
+            }
+        } else if (e.keyCode === 101) { // numPad 5 / scroll up 
+            let shot = document.querySelector('[id^="screenshot-"]');
+            window.scrollBy(0, -shot.clientHeight);
+        }
+    }
+    
     var st = document.createElement('style');
     st.innerHTML = 'ol.dribbbles li.group { width: 47%; }' +
         'ol.dribbbles li.group div.dribbble-img img { width: 100% }';
