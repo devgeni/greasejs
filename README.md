@@ -1,2 +1,5 @@
 # greasejs
-my scripts for greasemonkey
+My scripts for greasemonkey.
+
+## Disclaimer
+Use on your own risk.
