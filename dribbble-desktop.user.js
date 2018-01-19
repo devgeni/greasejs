@@ -3,7 +3,7 @@
 // @namespace   https://dribbble.com
 // @description Load large images for dribbble and delete overlays with(out) JS
 // @include     https://dribbble.com/*
-// @version     0.4.0
+// @version     0.4.1
 // @author      junib
 // @grant       none
 // ==/UserScript==
@@ -66,7 +66,8 @@
     var st = document.createElement('style');
     st.innerHTML = '#main ol.dribbbles { max-width: none }' +
         '#main ol.dribbbles li.group { width: 50%; margin: 0 }' +
-        'ol.dribbbles li.group div.dribbble-img img { width: 100%; max-width: 1320px; }';
+        'ol.dribbbles li.group div.dribbble-img img { width: 100%; max-width: 1320px; }' +
+        '#main .dribbble-shot { padding: 15px; }';
     document.head.appendChild(st);
     
     let changeImg = (el) => {   
