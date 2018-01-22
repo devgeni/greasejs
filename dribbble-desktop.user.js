@@ -50,7 +50,7 @@
     function getVisibleShots(selector = '[id^="screenshot-"]') {
         const shots = document.querySelectorAll(selector);
         return [...shots].filter(shot => {
-            let rect = shot.getBoundingClientRect();
+            const rect = shot.getBoundingClientRect();
             return (rect.top >= 0) && (rect.bottom <= window.innerHeight);
         });
     }
@@ -58,14 +58,14 @@
     function scrollPageOpenLink(e) {
         if (!e.ctrlKey) {
             if ([83, 98].includes(e.keyCode)) { // numPad 2 or s / scroll down
-                let shot = document.querySelector('[id^="screenshot-"]');
+                const shot = document.querySelector('[id^="screenshot-"]');
                 if (!window.pageYOffset) {
                     shot.scrollIntoView();
                 } else {
                     window.scrollBy(0, shot.clientHeight);
                 }
             } else if ([87, 101].includes(e.keyCode)) { // numPad 5 or w / scroll up 
-                let shot = document.querySelector('[id^="screenshot-"]');
+                const shot = document.querySelector('[id^="screenshot-"]');
                 window.scrollBy(0, -shot.clientHeight);
             } else if ([49, 50].includes(e.keyCode)) {
                 const shots = getVisibleShots();
